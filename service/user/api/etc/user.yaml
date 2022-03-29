@@ -1,0 +1,20 @@
+name: User
+Host: 0.0.0.0
+Port: 8000
+Mysql:
+  DataSource: root:123456@tcp(mysql:3306)/web_game?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+
+CacheRedis:
+- Host: redis:6379
+  Pass: 123456
+  Type: node
+
+Auth:
+  AccessSecret: OjbkOjbksjlakjewinfldkfjeihjfeohn
+  AccessExpire: 86400
+
+UserRpc:
+  Etcd:
+    Hosts:
+    - etcd:2379
+    Key: user.rpc

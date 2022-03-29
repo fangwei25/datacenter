@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package userclient;
+
+option go_package = "user";
+
+
+//请求登录
+//登录方式:
+//0 JWT登录     account填入：空字符串""     acc_token填入：JWT token字符串
+//1 账号密码登录 account填入：账号          acc_token填入：加盐后密码的MD5哈希值
+//2 微信登录    account填入：微信UniID     acc_token填入：
+//3 手机号登录  account填入：手机号         acc_token填入：验证码
+//4 游客登录    account填入：游客账号       acc_token填入：空字符串""
+//5 apple登录
+//6 facebook登录
+message ReqLogin {
+    string app_version = 1;  //客户端版本号
+    string account = 2;  //账号
+    string acc_token = 3;  //登录凭据
+    int32 login_type = 4;  //登录方式
+    int32 time = 5;  //时间
+    string device_id = 6;  //设备id，用于校验请求次数频率等
+    int32 invitation = 7;  //邀请码
+    string channel = 8;  //渠道码
+}
+
+message ResLogin {
+    int32 err_no = 1; //错误码，0=成功，其他数字代表各种失败
+    string err_msg = 2; //错误信息
+    string jwt = 3; //jwt token, 用于下次登录的凭据
+    string guest_account = 4; //如果是游客登录，把游客随机账号返回给客户端
+    bool is_reg = 5; //是否是首次注册
+}
+// 用户信息
+message ReqUserInfo {
+    int32 id = 1;
+}
+
+message ResUserInfo {
+    int32 player_id = 1;
+    string name = 2;
+    int32 gender = 3;
+    string avator_url = 4;
+    int32 invitation_id = 5;
+    string channel = 6;
+    int32 vip_lv = 7;
+    int64 vip_exp = 8;
+    int32 level = 9;
+    int64 level_exp = 10;
+}
+
+message ReqBinding {
+    string open_id = 1;
+    string access_token = 2;
+}
+
+message ResBinding {
+    int32 err_no = 1; //错误码，0=成功，其他数字代表各种失败
+    string err_msg = 2; //错误信息
+}
+
+service User {
+    rpc Login (ReqLogin) returns (ResLogin);
+    rpc Binding (ReqBinding) returns (ResBinding);
+    rpc UserInfo (ReqUserInfo) returns (ResUserInfo);
+}

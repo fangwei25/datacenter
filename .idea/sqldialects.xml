@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/service/user/model/sql/account_apple.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/service/user/model/sql/account_guest.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/service/user/model/sql/account_mobile.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/service/user/model/sql/account_pwd.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/service/user/model/sql/account_wechat.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/service/user/model/sql/player.sql" dialect="GenericSQL" />
+  </component>
+</project>

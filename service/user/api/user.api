@@ -1,0 +1,78 @@
+syntax = "v1"
+
+info(
+    title: "用户注册登录"
+    desc: "提供用户注册、登录、绑定等服务"
+    author: "fangwei25"
+    email: "fangwei25@gmail.com"
+    version: "1.0.0"
+)
+
+type (
+    //请求登录
+    //登录方式:
+    //0 JWT登录     account填入：空字符串""     acc_token填入：JWT token字符串
+    //1 账号密码登录 account填入：账号          acc_token填入：加盐后密码的MD5哈希值
+    //2 微信登录    account填入：微信UniID     acc_token填入：
+    //3 手机号登录  account填入：手机号         acc_token填入：验证码
+    //4 游客登录    account填入：游客账号       acc_token填入：空字符串""
+    //5 apple登录
+    //6 facebook登录
+    ReqLogin {
+        app_version string `json:"app_version"` //客户端版本号
+        account string `json:"account"`         //账号
+        acc_token string `json:"acc_token"`     //登录凭据
+        login_type int32 `json:"login_type"`    //登录方式
+        time int32 `json:"time"`                //时间
+        device_id string `json:"device_id"`     //设备id，用于校验请求次数频率等
+        invitation int32 `json:"invitation"`    //邀请码
+        channel string `json:"channel"`         //渠道码
+    }
+
+    ResLogin {
+        err_no int32 `json:"err_no"`                //错误码，0=成功，其他数字代表各种失败
+        err_msg string `json:"err_msg"`             //错误信息
+        jwt string `json:"jwt"`                     //jwt token, 用于下次登录的凭据
+        guest_account string `json:"guest_account"` //如果是游客登录，把游客随机账号返回给客户端
+        is_reg bool `json:"is_reg"`                 //是否是首次注册
+    }
+
+    ResUserInfo {
+        player_id int32 `json:"player_id"`
+        name string `json:"name"`
+        gender int32 `json:"gender"`
+        avator_url string `json:"avator_url"`
+        invitation_id int32 `json:"invitation_id"`
+        channel string `json:"channel"`
+        vip_lv int32 `json:"vip_lv"`
+        vip_exp int64 `json:"vip_exp"`
+        level int32 `json:"level"`
+        level_exp int64 `json:"level_exp"`
+    }
+
+    ReqBinding {
+        open_id string `json:"open_id"`
+        access_token string `json:"access_token"`
+    }
+
+    ResBindding {
+        err_no int32 `json:"err_no"`    //错误码，0=成功，其他数字代表各种失败
+        err_msg string `json:"err_msg"` //错误信息
+    }
+)
+
+service User {
+    @handler Login // 登录
+    post /api/user/login (ReqLogin) returns (ResLogin)
+}
+
+@server(
+    jwt: Auth
+)
+service User {
+    @handler UserInfo //获取用户信息
+    post /api/user/userinfo returns (ResUserInfo)
+
+    @handler Binding //绑定账户
+    post /api/user/binding (ReqBinding) returns (ResBindding)
+}
