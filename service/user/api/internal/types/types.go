@@ -5,7 +5,7 @@ type ReqLogin struct {
 	AppVersion string `json:"app_version"` //客户端版本号
 	Account    string `json:"account"`     //账号
 	AccToken   string `json:"acc_token"`   //登录凭据
-	LoginType  int32  `json:"login_type"`  //登录方式
+	LoginType  string `json:"login_type"`  //登录方式
 	Time       int32  `json:"time"`        //时间
 	DeviceId   string `json:"device_id"`   //设备id，用于校验请求次数频率等
 	Invitation int32  `json:"invitation"`  //邀请码

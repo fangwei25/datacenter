@@ -10,7 +10,7 @@ CREATE TABLE `player`
     `vip_exp`          int(20)      NOT NULL      DEFAULT '0' COMMENT 'vip升级经验',
     `level`            int(11)      NOT NULL      DEFAULT '1' COMMENT '等级',
     `level_exp`        int(20)      NOT NULL      DEFAULT '0' COMMENT '等级经验',
-    `ori_account_type` int(11)      NOT NULL COMMENT '玩家原始注册方式',
+    `ori_account_type` varchar(32)  NOT NULL COMMENT '玩家原始注册方式',
     `ori_account`      varchar(255) NOT NULL COMMENT '玩家原始注册账户名',
     `create_time`      timestamp    NULL          DEFAULT CURRENT_TIMESTAMP,
     `update_time`      timestamp    NULL          DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

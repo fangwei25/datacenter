@@ -19,7 +19,7 @@ var (
 	playerRowsExpectAutoSet   = strings.Join(stringx.Remove(playerFieldNames, "`create_time`", "`update_time`"), ",")
 	playerRowsWithPlaceHolder = strings.Join(stringx.Remove(playerFieldNames, "`player_id`", "`create_time`", "`update_time`"), "=?,") + "=?"
 
-	cachePlayerPlayerIdPrefix = "cache:user:playerId:"
+	cachePlayerPlayerIdPrefix = "cache:player:playerId:"
 )
 
 type (
@@ -46,7 +46,7 @@ type (
 		VipExp         int64     `db:"vip_exp"`          // vip升级经验
 		Level          int64     `db:"level"`            // 等级
 		LevelExp       int64     `db:"level_exp"`        // 等级经验
-		OriAccountType int64     `db:"ori_account_type"` // 玩家原始注册方式
+		OriAccountType string    `db:"ori_account_type"` // 玩家原始注册方式
 		OriAccount     string    `db:"ori_account"`      // 玩家原始注册账户名
 		CreateTime     time.Time `db:"create_time"`
 		UpdateTime     time.Time `db:"update_time"`
@@ -56,7 +56,7 @@ type (
 func NewPlayerModel(conn sqlx.SqlConn, c cache.CacheConf) PlayerModel {
 	return &defaultPlayerModel{
 		CachedConn: sqlc.NewConn(conn, c),
-		table:      "`user`",
+		table:      "`player`",
 	}
 }
 

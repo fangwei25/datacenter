@@ -38,11 +38,11 @@ type (
 	}
 
 	AccountPwd struct {
-		Account    string         `db:"account"`
-		PlayerId   int64          `db:"player_id"`
-		Pwd        sql.NullString `db:"pwd"`
-		CreateTime time.Time      `db:"create_time"`
-		LastLogin  time.Time      `db:"last_login"`
+		Account    string    `db:"account"`
+		PlayerId   int64     `db:"player_id"`
+		Pwd        string    `db:"pwd"`
+		CreateTime time.Time `db:"create_time"`
+		LastLogin  time.Time `db:"last_login"`
 	}
 )
 
