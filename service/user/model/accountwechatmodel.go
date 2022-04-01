@@ -38,13 +38,13 @@ type (
 	}
 
 	AccountWechat struct {
-		Account     string         `db:"account"`
-		PlayerId    int64          `db:"player_id"`
-		UnionId     sql.NullString `db:"union_id"`
-		AccessToken sql.NullString `db:"access_token"`
-		UserInfo    sql.NullString `db:"user_info"`
-		CreateTime  time.Time      `db:"create_time"`
-		LastLogin   time.Time      `db:"last_login"`
+		Account     string    `db:"account"`
+		PlayerId    int64     `db:"player_id"`
+		UnionId     string    `db:"union_id"`
+		AccessToken string    `db:"access_token"`
+		UserInfo    string    `db:"user_info"`
+		CreateTime  time.Time `db:"create_time"`
+		LastLogin   time.Time `db:"last_login"`
 	}
 )
 
@@ -118,8 +118,8 @@ func (m *defaultAccountWechatModel) Delete(account string) error {
 		return err
 	}
 
-	accountWechatPlayerIdKey := fmt.Sprintf("%s%v", cacheAccountWechatPlayerIdPrefix, data.PlayerId)
 	accountWechatAccountKey := fmt.Sprintf("%s%v", cacheAccountWechatAccountPrefix, account)
+	accountWechatPlayerIdKey := fmt.Sprintf("%s%v", cacheAccountWechatPlayerIdPrefix, data.PlayerId)
 	_, err = m.Exec(func(conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("delete from %s where `account` = ?", m.table)
 		return conn.Exec(query, account)

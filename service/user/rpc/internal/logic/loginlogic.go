@@ -67,7 +67,7 @@ func (l *LoginLogic) Login(in *user.ReqLogin) (*user.ResLogin, error) {
 }
 
 func (l *LoginLogic) IsSupportLoginType(loginTypeName string) bool {
-	if v, ok := l.svcCtx.Config.SupportLoginType[loginTypeName]; ok {
+	if v, ok := l.svcCtx.Config.LoginType[loginTypeName]; ok {
 		return v
 	}
 	return false

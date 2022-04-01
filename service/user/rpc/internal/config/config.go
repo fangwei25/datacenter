@@ -11,7 +11,11 @@ type Config struct {
 		DataSource string
 	}
 
-	CacheRedis       cache.CacheConf
-	Salt             string
-	SupportLoginType map[string]bool //支持的登录方式
+	CacheRedis cache.CacheConf
+	Salt       string
+	LoginType  map[string]bool //支持的登录方式
+	Wechat     struct {
+		AppID     string
+		AppSecret string
+	}
 }

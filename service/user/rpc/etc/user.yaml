@@ -16,6 +16,10 @@ CacheRedis:
 
 Salt: HWVOFkGgPJKLJhiuosdflkasjaZR9KQ2i8xe
 
+Wechat:
+  AppID: 123456todo
+  AppSecret: todotodo
+
 SupportLoginType:
   JWT: true
   Password: true
