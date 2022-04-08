@@ -38,12 +38,12 @@ type (
 	}
 
 	AccountFacebook struct {
-		Account       string         `db:"account"`
-		PlayerId      int64          `db:"player_id"`
-		IdentityToken sql.NullString `db:"identity_token"`
-		AccessToken   sql.NullString `db:"access_token"`
-		CreateTime    time.Time      `db:"create_time"`
-		LastLogin     time.Time      `db:"last_login"`
+		Account       string    `db:"account"`
+		PlayerId      int64     `db:"player_id"`
+		IdentityToken string    `db:"identity_token"`
+		AccessToken   string    `db:"access_token"`
+		CreateTime    time.Time `db:"create_time"`
+		LastLogin     time.Time `db:"last_login"`
 	}
 )
 
@@ -60,7 +60,7 @@ func (m *defaultAccountFacebookModel) Insert(data *AccountFacebook) (sql.Result,
 	ret, err := m.Exec(func(conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?)", m.table, accountFacebookRowsExpectAutoSet)
 		return conn.Exec(query, data.Account, data.PlayerId, data.IdentityToken, data.AccessToken, data.LastLogin)
-	}, accountFacebookAccountKey, accountFacebookPlayerIdKey)
+	}, accountFacebookPlayerIdKey, accountFacebookAccountKey)
 	return ret, err
 }
 
@@ -117,8 +117,8 @@ func (m *defaultAccountFacebookModel) Delete(account string) error {
 		return err
 	}
 
-	accountFacebookAccountKey := fmt.Sprintf("%s%v", cacheAccountFacebookAccountPrefix, account)
 	accountFacebookPlayerIdKey := fmt.Sprintf("%s%v", cacheAccountFacebookPlayerIdPrefix, data.PlayerId)
+	accountFacebookAccountKey := fmt.Sprintf("%s%v", cacheAccountFacebookAccountPrefix, account)
 	_, err = m.Exec(func(conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("delete from %s where `account` = ?", m.table)
 		return conn.Exec(query, account)

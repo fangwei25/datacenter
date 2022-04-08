@@ -18,5 +18,9 @@ type Config struct {
 		AppID     string
 		AppSecret string
 	}
+	FaceBook struct {
+		AppID     string
+		AppSecret string
+	}
 	SuperSmsCode map[string]bool //超级短信验证码
 }

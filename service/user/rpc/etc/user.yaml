@@ -20,6 +20,10 @@ Wechat:
   AppID: 123456todo
   AppSecret: todotodo
 
+Facebook:
+  AppID: 123456todo
+  AppSecret: todotodo
+
 SupportLoginType:
   JWT: true
   Password: true
