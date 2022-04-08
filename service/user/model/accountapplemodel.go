@@ -38,14 +38,12 @@ type (
 	}
 
 	AccountApple struct {
-		Account       string         `db:"account"`
-		PlayerId      int64          `db:"player_id"`
-		Email         sql.NullString `db:"email"`
-		IdentityToken sql.NullString `db:"identity_token"`
-		AccessToken   sql.NullString `db:"access_token"`
-		UserInfo      sql.NullString `db:"user_info"`
-		CreateTime    time.Time      `db:"create_time"`
-		LastLogin     time.Time      `db:"last_login"`
+		Account       string    `db:"account"`
+		PlayerId      int64     `db:"player_id"`
+		Email         string    `db:"email"`
+		IdentityToken string    `db:"identity_token"`
+		CreateTime    time.Time `db:"create_time"`
+		LastLogin     time.Time `db:"last_login"`
 	}
 )
 
@@ -60,8 +58,8 @@ func (m *defaultAccountAppleModel) Insert(data *AccountApple) (sql.Result, error
 	accountAppleAccountKey := fmt.Sprintf("%s%v", cacheAccountAppleAccountPrefix, data.Account)
 	accountApplePlayerIdKey := fmt.Sprintf("%s%v", cacheAccountApplePlayerIdPrefix, data.PlayerId)
 	ret, err := m.Exec(func(conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?)", m.table, accountAppleRowsExpectAutoSet)
-		return conn.Exec(query, data.Account, data.PlayerId, data.Email, data.IdentityToken, data.AccessToken, data.UserInfo, data.LastLogin)
+		query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?)", m.table, accountAppleRowsExpectAutoSet)
+		return conn.Exec(query, data.Account, data.PlayerId, data.Email, data.IdentityToken, data.LastLogin)
 	}, accountAppleAccountKey, accountApplePlayerIdKey)
 	return ret, err
 }
@@ -108,7 +106,7 @@ func (m *defaultAccountAppleModel) Update(data *AccountApple) error {
 	accountApplePlayerIdKey := fmt.Sprintf("%s%v", cacheAccountApplePlayerIdPrefix, data.PlayerId)
 	_, err := m.Exec(func(conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("update %s set %s where `account` = ?", m.table, accountAppleRowsWithPlaceHolder)
-		return conn.Exec(query, data.PlayerId, data.Email, data.IdentityToken, data.AccessToken, data.UserInfo, data.LastLogin, data.Account)
+		return conn.Exec(query, data.PlayerId, data.Email, data.IdentityToken, data.LastLogin, data.Account)
 	}, accountApplePlayerIdKey, accountAppleAccountKey)
 	return err
 }
@@ -124,7 +122,7 @@ func (m *defaultAccountAppleModel) Delete(account string) error {
 	_, err = m.Exec(func(conn sqlx.SqlConn) (result sql.Result, err error) {
 		query := fmt.Sprintf("delete from %s where `account` = ?", m.table)
 		return conn.Exec(query, account)
-	}, accountApplePlayerIdKey, accountAppleAccountKey)
+	}, accountAppleAccountKey, accountApplePlayerIdKey)
 	return err
 }
 

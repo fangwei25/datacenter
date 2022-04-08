@@ -1,10 +1,12 @@
 package logic
 
 import (
+	"github.com/zeromicro/go-zero/core/logx"
 	"google.golang.org/grpc/status"
 	"strings"
 	"time"
 	"web_game/common/logintype"
+	"web_game/common/sms"
 	"web_game/service/user/model"
 	"web_game/service/user/rpc/user"
 )
@@ -13,6 +15,16 @@ func (l *LoginLogic) loginByMobile(in *user.ReqLogin) (playerId int64, isReg boo
 	account := strings.TrimSpace(in.Account)
 	if len(account) <= 0 {
 		return 0, false, status.Error(100, "账号不能为空")
+	}
+
+	//校验 验证码
+	checkNum := in.GetAccToken()
+	if checkNum == "" || sms.GetCheckNum(account) != checkNum {
+		if superSms, ok := l.svcCtx.Config.SuperSmsCode[checkNum]; !ok || !superSms {
+			return 0, false, status.Error(200, "短信验证码不正确")
+		} else {
+			logx.Info("super sms code triggered, account: ", account, ", code: ", checkNum)
+		}
 	}
 
 	res, err := l.svcCtx.AccountPwdModel.FindOne(account)

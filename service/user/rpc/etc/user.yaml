@@ -28,3 +28,7 @@ SupportLoginType:
   Guest: true
   Apple: true
   Facebook: true
+
+SuperSmsCode:
+   "951654": true
+   "951357": true

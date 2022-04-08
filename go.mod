@@ -3,6 +3,7 @@ module web_game
 go 1.18
 
 require (
+	github.com/Timothylock/go-signin-with-apple v0.0.0-20220114155622-499fb6086c70
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/silenceper/wechat/v2 v2.1.2
 	github.com/zeromicro/go-zero v1.3.1
@@ -47,6 +48,8 @@ require (
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/spf13/cast v1.3.1 // indirect
+	github.com/tideland/golib v4.24.2+incompatible // indirect
+	github.com/tideland/gorest v2.15.5+incompatible // indirect
 	go.etcd.io/etcd/api/v3 v3.5.2 // indirect
 	go.etcd.io/etcd/client/pkg/v3 v3.5.2 // indirect
 	go.etcd.io/etcd/client/v3 v3.5.2 // indirect
