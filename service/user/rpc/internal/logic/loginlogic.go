@@ -2,7 +2,6 @@ package logic
 
 import (
 	"context"
-	"errors"
 	"google.golang.org/grpc/status"
 	"web_game/common/logintype"
 	"web_game/service/user/rpc/internal/svc"
@@ -28,11 +27,11 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 func (l *LoginLogic) Login(in *user.ReqLogin) (*user.ResLogin, error) {
 	//检查是否是支持的登录方式
 	if !l.IsSupportLoginType(in.GetLoginType()) {
-		return nil, errors.New("not supported login type")
+		return nil, status.Error(100, "不支持的登录方式")
 	}
 
 	if len(in.DeviceId) < 32 {
-		return nil, errors.New("invalid device id")
+		return nil, status.Error(100, "设备ID不合法")
 	}
 
 	var playerId int64

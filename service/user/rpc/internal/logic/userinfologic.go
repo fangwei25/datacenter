@@ -2,7 +2,6 @@ package logic
 
 import (
 	"context"
-
 	"web_game/service/user/rpc/internal/svc"
 	"web_game/service/user/rpc/user"
 
@@ -24,7 +23,21 @@ func NewUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserInfo
 }
 
 func (l *UserInfoLogic) UserInfo(in *user.ReqUserInfo) (*user.ResUserInfo, error) {
-	// todo: add your logic here and delete this line
 
-	return &user.ResUserInfo{}, nil
+	player, err := l.svcCtx.PlayerModel.FindOne(in.GetPlayerId())
+	if err != nil {
+		return nil, err
+	}
+	return &user.ResUserInfo{
+		PlayerId:     player.PlayerId,
+		Name:         player.Name,
+		Gender:       int32(player.Gender),
+		AvatorUrl:    player.AvatorUrl,
+		InvitationId: int32(player.InvitationId),
+		Channel:      player.Channel,
+		VipLv:        int32(player.VipLv),
+		VipExp:       player.VipExp,
+		Level:        int32(player.Level),
+		LevelExp:     player.LevelExp,
+	}, nil
 }

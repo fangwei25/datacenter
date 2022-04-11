@@ -23,11 +23,11 @@ message ResLogin {
 }
 // 用户信息
 message ReqUserInfo {
-    int32 id = 1;
+    int64 player_id = 1;
 }
 
 message ResUserInfo {
-    int32 player_id = 1;
+    int64 player_id = 1;
     string name = 2;
     int32 gender = 3;
     string avator_url = 4;

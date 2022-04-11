@@ -21,7 +21,7 @@ type ResLogin struct {
 }
 
 type ResUserInfo struct {
-	PlayerId     int32  `json:"player_id"`
+	PlayerId     int64  `json:"player_id"`
 	Name         string `json:"name"`
 	Gender       int32  `json:"gender"`
 	AvatorUrl    string `json:"avator_url"`
