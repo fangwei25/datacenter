@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/Timothylock/go-signin-with-apple v0.0.0-20220114155622-499fb6086c70
 	github.com/golang-jwt/jwt v3.2.2+incompatible
+	github.com/huandu/facebook/v2 v2.5.5
 	github.com/silenceper/wechat/v2 v2.1.2
 	github.com/zeromicro/go-zero v1.3.1
 	golang.org/x/crypto v0.0.0-20210920023735-84f357641f63
@@ -35,7 +36,6 @@ require (
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/googleapis/gnostic v0.4.1 // indirect
 	github.com/hashicorp/golang-lru v0.5.1 // indirect
-	github.com/huandu/facebook/v2 v2.5.5 // indirect
 	github.com/json-iterator/go v1.1.11 // indirect
 	github.com/justinas/alice v1.2.0 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
