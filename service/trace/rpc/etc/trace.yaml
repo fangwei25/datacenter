@@ -1,0 +1,13 @@
+Name: trace.rpc
+ListenOn: 127.0.0.1:9002
+Etcd:
+  Hosts:
+  - 127.0.0.1:2379
+  Key: trace.rpc
+
+TFile:
+  Dir: "./trace_log/" #追踪日志存放文件位置
+  PreFix: "tlog" #追踪日志文件名前缀
+
+Ea:
+  Url: "http://127.0.0.1"

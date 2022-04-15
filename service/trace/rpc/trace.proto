@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package trace;
+
+option go_package = "trace";
+
+message ReqTrace {
+    string trace_name = 1; //追踪类型
+    string json_data = 2; //追踪数据 json格式
+}
+
+message ResTrace {
+}
+
+service Trace {
+    rpc PushTrace (ReqTrace) returns (ResTrace);;
+}

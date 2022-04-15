@@ -8,7 +8,9 @@ import (
 	"web_game/common/counterx"
 	"web_game/common/jwtx"
 	"web_game/common/logintype"
+	"web_game/common/tracex"
 	"web_game/service/counter/rpc/counterclient"
+	"web_game/service/trace/rpc/traceclient"
 	"web_game/service/user/rpc/userclient"
 
 	"web_game/service/user/api/internal/svc"
@@ -60,7 +62,13 @@ func (l *LoginLogic) Login(req types.ReqLogin) (resp *types.ResLogin, err error)
 		return nil, err
 	}
 
-	//上报counter
+	//上报counter，trace
+	loginTracInfo := &tracex.LoginInfo{
+		PlayerId: res.PlayerId,
+		Account:  req.Account,
+		DeviceId: req.DeviceId,
+		//IpAddr:   l.ctx.Value("ip"),
+	}
 	if res.IsReg {
 		_, _ = l.svcCtx.CounterRpc.Update(l.ctx, &counterclient.ReqUpdate{
 			OwnerId:    res.PlayerId,
@@ -68,12 +76,20 @@ func (l *LoginLogic) Login(req types.ReqLogin) (resp *types.ResLogin, err error)
 			EventField: req.LoginType,
 			Value:      1,
 		})
+		_, _ = l.svcCtx.TraceRpc.PushTrace(l.ctx, &traceclient.ReqTrace{
+			TraceName: tracex.Register,
+			JsonData:  loginTracInfo.ToJsonStr(),
+		})
 	} else {
 		_, _ = l.svcCtx.CounterRpc.Update(l.ctx, &counterclient.ReqUpdate{
 			OwnerId:    res.PlayerId,
 			EventType:  counterx.ActLogin,
 			EventField: req.LoginType,
 			Value:      1,
+		})
+		_, _ = l.svcCtx.TraceRpc.PushTrace(l.ctx, &traceclient.ReqTrace{
+			TraceName: tracex.Register,
+			JsonData:  loginTracInfo.ToJsonStr(),
 		})
 	}
 

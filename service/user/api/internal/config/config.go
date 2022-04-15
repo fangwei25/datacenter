@@ -13,4 +13,5 @@ type Config struct {
 	}
 	UserRpc    zrpc.RpcClientConf
 	CounterRpc zrpc.RpcClientConf
+	TraceRpc   zrpc.RpcClientConf
 }

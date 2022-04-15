@@ -25,3 +25,9 @@ CounterRpc:
     Hosts:
     - etcd:2379
     Key: counter.rpc
+
+TraceRpc:
+  Etcd:
+    Hosts:
+    - etcd:2379
+    Key: trace.rpc
