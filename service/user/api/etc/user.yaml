@@ -18,3 +18,10 @@ UserRpc:
     Hosts:
     - etcd:2379
     Key: user.rpc
+
+
+CounterRpc:
+  Etcd:
+    Hosts:
+    - etcd:2379
+    Key: counter.rpc

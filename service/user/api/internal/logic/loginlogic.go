@@ -5,8 +5,10 @@ import (
 	"math/rand"
 	"strings"
 	"time"
+	"web_game/common/counterx"
 	"web_game/common/jwtx"
 	"web_game/common/logintype"
+	"web_game/service/counter/rpc/counterclient"
 	"web_game/service/user/rpc/userclient"
 
 	"web_game/service/user/api/internal/svc"
@@ -56,6 +58,23 @@ func (l *LoginLogic) Login(req types.ReqLogin) (resp *types.ResLogin, err error)
 	accessToken, err := jwtx.GetToken(l.svcCtx.Config.Auth.AccessSecret, now, accessExpire, res.PlayerId)
 	if err != nil {
 		return nil, err
+	}
+
+	//上报counter
+	if res.IsReg {
+		_, _ = l.svcCtx.CounterRpc.Update(l.ctx, &counterclient.ReqUpdate{
+			OwnerId:    res.PlayerId,
+			EventType:  counterx.ActRegister,
+			EventField: req.LoginType,
+			Value:      1,
+		})
+	} else {
+		_, _ = l.svcCtx.CounterRpc.Update(l.ctx, &counterclient.ReqUpdate{
+			OwnerId:    res.PlayerId,
+			EventType:  counterx.ActLogin,
+			EventField: req.LoginType,
+			Value:      1,
+		})
 	}
 
 	return &types.ResLogin{
