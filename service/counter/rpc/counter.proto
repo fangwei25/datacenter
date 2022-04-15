@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package counter;
+
+option go_package = "counter";
+
+message ReqUpdate {
+    int64 owner_id = 1; //事件拥有者id
+    string event_type = 2; //事件类型
+    string event_field = 3; //事件子域
+    int64 value = 4; //事件值
+}
+
+message ResUpdate {}
+
+message ReqQuery {
+    int64 owner_id = 1; //事件拥有者id
+    string event_type = 2; //事件类型
+    string event_field = 3; //事件子域
+    int32 time_dimension = 4; //时间维度
+    int64 time_flag = 5;//时间标记
+}
+
+message ResQuery {
+
+    int64 count = 1; //计数
+    int64 value = 2;//记量
+    int64 max = 3; //最大值
+    int64 min = 4; //最小值
+}
+
+service Counter {
+    rpc Query (ReqQuery) returns (ResQuery);
+    rpc Update (ReqUpdate) returns (ResUpdate);
+}
